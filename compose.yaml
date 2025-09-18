@@ -1,0 +1,7 @@
+services:
+#  <challenge_name>:
+#    build: ./<path_to_challenge>
+#    container_name: <challenge_name>
+#    ports:
+#      - "8000:8000"
+#    restart: unless-stopped
