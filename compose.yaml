@@ -5,3 +5,9 @@ services:
 #    ports:
 #      - "8000:8000"
 #    restart: unless-stopped
+  pwnies-library:
+    build: ./challenges/pwnies_library/
+    container_name: pwnies_library
+    ports:
+      - "9001:80"
+    restart: unless-stopped

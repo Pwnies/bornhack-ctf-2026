@@ -1,0 +1,169 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>The Pwnies Library</title>
+  <style>
+    :root { --bg:#0f1226; --card:#1a1f3a; --accent:#7c5cff; --accent2:#22d3ee; --text:#e7e9f5; --muted:#9aa0c4; }
+    * { box-sizing: border-box; }
+    body { font-family: system-ui, -apple-system, sans-serif; margin: 0; min-height: 100vh;
+           background: radial-gradient(1200px 600px at 70% -10%, #2a1f5c 0%, var(--bg) 55%); color: var(--text); }
+    .wrap { max-width: 920px; margin: 0 auto; padding: 3rem 1.25rem 5rem; }
+    h1 { font-size: 2.1rem; margin: 0 0 .25rem; }
+    .tag { display:inline-block; font-size:.75rem; letter-spacing:.08em; text-transform:uppercase;
+           color: var(--accent2); border:1px solid #2c335e; border-radius:999px; padding:.2rem .6rem; }
+    .muted { color: var(--muted); }
+    code { background:#11152e; color:#c9d1ff; padding:.12rem .4rem; border-radius:6px; font-size:.9em; }
+    .controls { display:flex; flex-wrap:wrap; gap:.6rem; margin:1.5rem 0 1rem; }
+    button { cursor:pointer; border:none; border-radius:10px; padding:.7rem 1.1rem; font-size:.95rem; font-weight:600;
+             color:#fff; background:linear-gradient(135deg, var(--accent), #5b8cff); transition: transform .06s ease, opacity .2s; }
+    button:hover { opacity:.92; } button:active { transform: translateY(1px); }
+    button.ghost { background:#222850; color:var(--text); border:1px solid #313862; }
+    .searchbar { display:flex; gap:.5rem; margin:.5rem 0 1.25rem; }
+    input { flex:1; padding:.7rem .9rem; border-radius:10px; border:1px solid #2c335e; background:#11152e;
+            color:var(--text); font-size:1rem; }
+    input::placeholder { color:#6b73a0; }
+    .panel { background:var(--card); border:1px solid #2a3160; border-radius:14px; padding:1.25rem; min-height:140px; }
+    .panel h2 { font-size:.95rem; margin:.1rem 0 1rem; color:var(--accent2); font-weight:600; }
+
+    /* Book grid with covers */
+    .grid { display:grid; grid-template-columns:repeat(auto-fill, minmax(250px, 1fr)); gap:1rem; }
+    .book { background:#11152e; border:1px solid #232a52; border-radius:12px; overflow:hidden;
+            display:flex; flex-direction:column; }
+    .cover { aspect-ratio:2/3; width:100%; object-fit:cover; background:
+             repeating-linear-gradient(45deg,#1c2245,#1c2245 10px,#222a52 10px,#222a52 20px); }
+    .book .meta { padding:.6rem .7rem; }
+    .book .t { font-size:.92rem; font-weight:600; line-height:1.25; }
+    .book .a { font-size:.8rem; color:var(--muted); margin-top:.25rem; }
+    .book .id { font-size:.72rem; color:#6b73a0; }
+
+    /* Author list */
+    .authors { list-style:none; margin:0; padding:0; }
+    .authors li { padding:.55rem .25rem; border-bottom:1px solid #232a52; display:flex; gap:.6rem; align-items:baseline; }
+    .authors li:last-child { border-bottom:none; }
+    .authors .id { color:var(--muted); font-variant-numeric:tabular-nums; min-width:1.8rem; }
+
+    .hint { margin-top:2rem; font-size:.85rem; }
+    .spin { color:var(--muted); }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <span class="tag">Powered by Sevablødda</span>
+    <h1>📚 Welcome to the Pwnies Library </h1>
+    <p class="muted">Everything on this page is fetched from our inherited library from DIKU, which we have painstakenly turned into bits.
+    Try the buttons below to explore what it can do!</p>
+
+    <div class="controls">
+      <button onclick="showBooks()">All books</button>
+      <button onclick="showAuthors()">All authors</button>
+      <button class="ghost" onclick="showBookById()">Book by ID…</button>
+    </div>
+
+    <div class="searchbar">
+      <input id="q" placeholder="Search books by title…" autocomplete="off">
+      <button onclick="runSearch()">Search</button>
+    </div>
+
+    <div class="panel">
+      <h2 id="panelTitle">All books</h2>
+      <div id="results"></div>
+    </div>
+
+    <p class="hint muted">Designed by Pwnies, 2026</p>
+  </div>
+
+  <script>
+    const GRAPHQL = "/graphql";
+    // Inline SVG placeholder shown when a cover image is missing.
+    const PLACEHOLDER =
+      "data:image/svg+xml;utf8," + encodeURIComponent(
+        `<svg xmlns='http://www.w3.org/2000/svg' width='200' height='300'>` +
+        `<rect width='100%' height='100%' fill='#1c2245'/>` +
+        `<text x='50%' y='50%' fill='#6b73a0' font-family='sans-serif' ` +
+        `font-size='16' text-anchor='middle'>no cover</text></svg>`);
+
+    async function gql(query, variables) {
+      const res = await fetch(GRAPHQL, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ query, variables }),
+      });
+      return (await res.json()).data;
+    }
+
+    function setTitle(t) { document.getElementById("panelTitle").textContent = t; }
+    function loading() { document.getElementById("results").innerHTML =
+      '<p class="spin">Loading…</p>'; }
+
+    function esc(s) {
+      return String(s).replace(/[&<>"]/g, c =>
+        ({ "&":"&amp;", "<":"&lt;", ">":"&gt;", '"':"&quot;" }[c]));
+    }
+
+    function renderBooks(books) {
+      const box = document.getElementById("results");
+      if (!books || !books.length) { box.innerHTML = '<p class="spin">No results.</p>'; return; }
+      box.className = "grid";
+      box.innerHTML = books.map(b => `
+        <div class="book">
+          <img class="cover" loading="lazy" src="${esc(b.image)}" alt="${esc(b.title)}"
+               onerror="this.onerror=null;this.src='${PLACEHOLDER}'">
+          <div class="meta">
+            <div class="t">${esc(b.title)}</div>
+            <div class="a">${esc(b.author)}</div>
+            <div class="id">#${b.id}</div>
+          </div>
+        </div>`).join("");
+    }
+
+    function renderAuthors(authors) {
+      const box = document.getElementById("results");
+      box.className = "";
+      box.innerHTML = '<ul class="authors">' + authors.map(a =>
+        `<li><span class="id">#${a.id}</span><span>${esc(a.name)}</span></li>`).join("") + "</ul>";
+    }
+
+    // Public query: books
+    async function showBooks() {
+      setTitle("All books"); loading();
+      const data = await gql(`{ books { id title author image } }`);
+      renderBooks(data.books);
+    }
+
+    // Public query: authors
+    async function showAuthors() {
+      setTitle("All authors"); loading();
+      const data = await gql(`{ authors { id name } }`);
+      renderAuthors(data.authors);
+    }
+
+    // Public query: book(id)
+    async function showBookById() {
+      const id = parseInt(prompt("Enter a book ID (1-16):"), 10);
+      if (!id) return;
+      setTitle(`Book #${id}`); loading();
+      const data = await gql(
+        `query($id: Int!) { book(id: $id) { id title author image } }`, { id });
+      renderBooks(data.book ? [data.book] : []);
+    }
+
+    // Public query: search(term)
+    async function runSearch() {
+      const term = document.getElementById("q").value.trim();
+      if (!term) { showBooks(); return; }
+      setTitle(`Search: "${term}"`); loading();
+      const data = await gql(
+        `query($t: String!) { search(term: $t) { id title author image } }`, { t: term });
+      renderBooks(data.search);
+    }
+
+    document.getElementById("q").addEventListener("keydown", (e) => {
+      if (e.key === "Enter") runSearch();
+    });
+
+    showBooks();
+  </script>
+</body>
+</html>
