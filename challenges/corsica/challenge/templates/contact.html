@@ -1,0 +1,16 @@
+{% extends "layout.html" %}
+{% block body %}
+<h2>Contact Us</h2>
+<form method="POST">
+  <label for="name">Your Name</label>
+  <input type="text" name="name" required>
+
+  <label for="email">Email</label>
+  <input type="text" name="email" required>
+
+  <label for="message">Message</label>
+  <textarea name="message" rows="4"></textarea>
+
+  <input type="submit" value="Send Message">
+</form>
+{% endblock %}

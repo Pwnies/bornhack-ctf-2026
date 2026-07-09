@@ -1,0 +1,59 @@
+{% extends "layout.html" %}
+{% block body %}
+
+<h2>👥 Our Tour Guides</h2>
+<p>Select a guide below to learn more:</p>
+
+<div class="guide-grid">
+  {% for gid, guide in guides.items() %}
+  <div class="guide-card">
+    <a href="{{ url_for('guides') }}?id={{ gid }}">
+      <img src="/static/{{ guide.name }}.png" alt="Guide" class="guide-image">
+      <h3>{{ guide.name }}</h3>
+      <p><strong>Specialty:</strong> {{ guide.specialty }}</p>
+    </a>
+  </div>
+  {% endfor %}
+</div>
+
+<style>
+.guide-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1.5rem;
+  margin-top: 2rem;
+}
+
+.guide-card {
+  background-color: #f9f9f9;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  padding: 1rem;
+  width: 260px;
+  text-align: center;
+  transition: transform 0.2s ease;
+}
+
+.guide-card:hover {
+  transform: scale(1.03);
+}
+
+.guide-card a {
+  text-decoration: none;
+  color: inherit;
+}
+
+.guide-image {
+  width: 100%;
+  height: 180px;
+  background-color: #ddd;
+  margin-bottom: 1rem;
+  line-height: 180px;
+  font-style: italic;
+  color: #555;
+  border-radius: 6px;
+}
+</style>
+
+{% endblock %}

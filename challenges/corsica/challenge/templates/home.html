@@ -1,0 +1,97 @@
+{% extends "layout.html" %}
+{% block body %}
+
+<div class="homepage-hero">
+  <h1 style=color:#003366;>Welcome to Corsica Tourist Travel</h1>
+  <p>Your personal guide to exploring the beauty of Corsica - from white-cliffed citadels to sun-soaked beaches and ancient hiking trails.</p>
+</div>
+
+<section class="homepage-section">
+  <h2>🌍 Discover Corsica</h2>
+  <p>Corsica offers a rare blend of rugged mountains, Mediterranean charm, and centuries of history. Whether you're hiking the GR20, relaxing on Palombaggia beach, or exploring Bonifacio's cliffs - we have tips and guides for you.</p>
+  <img src="/static/map.png" alt="Map of Corsica" class="image-placeholder">
+</section>
+
+<section class="homepage-section">
+  <h2>📍 Highlights</h2>
+  <ul>
+    <li>🏞️ Scenic routes through Corte and the interior</li>
+    <li>🏖️ Beaches like Saleccia and Santa Giulia</li>
+    <li>🏰 Historical landmarks in Ajaccio and Calvi</li>
+    <li>🍷 Authentic Corsican cuisine and wine tours</li>
+  </ul>
+</section>
+
+<section class="homepage-section">
+  <h2>💬 Testimonials</h2>
+  <blockquote>
+    "Sardinia is such a lovely island! It's so m... Wait, are we not talking about Sardinia?" – Jørgen Leth, 2025
+  </blockquote>
+  <blockquote>
+    "The island is so lovely - But it's a shame its inhabitted by the French!" – Fritz, 2025
+  </blockquote>
+  <blockquote>
+    "It was okay i guess.." – Napoleon, 1779
+  </blockquote>
+</section>
+
+<section class="homepage-cta">
+  <h2>Ready to begin your adventure?</h2>
+  <a class="button" href="{{ url_for('register') }}">Sign Up</a>
+  <a class="button secondary" href="{{ url_for('login') }}">Log In</a>
+</section>
+
+<style>
+.homepage-hero {
+  text-align: center;
+  background-color: #f0f8ff00;
+  padding: 2rem;
+  border-radius: 8px;
+  margin-bottom: 2rem;
+}
+
+.homepage-section {
+  margin-bottom: 2rem;
+}
+
+.image-placeholder {
+  width: 100%;
+  height: 200px;
+  background-color: #ddd;
+  color: #555;
+  text-align: center;
+  line-height: 200px;
+  font-style: italic;
+  border-radius: 4px;
+  margin-top: 1rem;
+}
+
+blockquote {
+  background-color: #f9f9f9;
+  border-left: 5px solid #ccc;
+  padding: 1rem;
+  font-style: italic;
+  margin: 1rem 0;
+}
+
+.homepage-cta {
+  text-align: center;
+  margin-top: 3rem;
+}
+
+.button {
+  background-color: #0055a5;
+  color: white;
+  padding: 0.8rem 1.5rem;
+  text-decoration: none;
+  border-radius: 5px;
+  margin: 0.5rem;
+  display: inline-block;
+}
+
+.button.secondary {
+  background-color: #aaa;
+}
+</style>
+
+{% endblock %}

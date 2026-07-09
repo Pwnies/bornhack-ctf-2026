@@ -1,0 +1,15 @@
+{% extends "layout.html" %}
+{% block body %}
+  <h2>Welcome, {{ username }}</h2>
+
+  <div class="bio-display">
+    <h3>Your Bio</h3>
+    <div class="bio-content">{{ bio | safe }}</div>
+  </div>
+
+  <form method="POST">
+    <textarea name="bio" id="bio" rows="5" placeholder="Tell us about yourself... You can use HTML tags for formatting!">{{ bio }}</textarea>
+    <input type="submit" value="Update Bio">
+  </form>
+
+{% endblock %}

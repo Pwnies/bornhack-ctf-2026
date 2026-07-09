@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>Corsica CTF Travel</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+  <header>
+    <h1>Corsica Tourist Travel</h1>
+    <nav>
+      <a href="{{ url_for('index') }}">Home</a>
+      {% if session.username %}
+      <a href="{{ url_for('guides') }}">Guides</a>
+      <a href="{{ url_for('tips') }}">Travel Tips</a>
+      <a href="{{ url_for('contact') }}">Contact</a>
+      <a href="{{ url_for('profile', profile_id=user_ids[session['username']]) }}">Profile</a>
+      <a href="{{ url_for('logout') }}">Logout</a>
+      <!-- <a href="{{ url_for('admin') }}">Admin</a> -->
+      {% if session.username == "admin" %}
+      <a href="{{ url_for('admin') }}">Admin</a>
+      {% endif %}
+      {% else %}
+      <a href="{{ url_for('login') }}">Login</a>
+      <a href="{{ url_for('register') }}">Register</a>
+      {% endif %}
+    </nav>
+  </header>
+
+  <div class="container">
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+    <div class="flashes">
+      {% for category, message in messages %}
+      <div class="flash flash-{{ category }}">{{ message }}</div>
+      {% endfor %}
+    </div>
+    {% endif %}
+    {% endwith %}
+    {% block body %}{% endblock %}
+  </div>
+
+  <footer>
+    <p style="color: rgba(255,255,255,1.0)">&copy; 2026 Pwnies Travel Guide</p>
+  </footer>
+</body>
+
+</html>

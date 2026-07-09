@@ -1,0 +1,24 @@
+{% extends "layout.html" %}
+{% block body %}
+<h2>Admin Dashboard</h2>
+
+
+
+<h3>Admin Resources</h3>
+<ul>
+  <li>Server status: <span style="color:green">OK</span></li>
+  <li>FLASK secret key: <code>edit: No longer posted here for security reasons!</code></li>
+  <li>Internal backup logs: available on request</li>
+</ul>
+
+<h3>Admin Flag Retrieval Tool</h3>
+<p>A temporary session token has been generated for secure access to internal resources.</p>
+<p><strong>Token:</strong> <code>{{ flag_token }}</code></p>
+<p><em>Note: This token is valid for 5 seconds only.</em></p>
+
+<form method="POST" action="/retrieve_flag">
+  <input type="hidden" name="token" value="{{ flag_token }}">
+  <input type="submit" value="Retrieve Flag">
+</form>
+
+{% endblock %}

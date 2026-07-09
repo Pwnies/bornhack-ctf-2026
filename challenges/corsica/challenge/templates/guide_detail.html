@@ -1,0 +1,51 @@
+{% extends "layout.html" %}
+{% block body %}
+
+<a href="{{ url_for('guides') }}" class="back-link">← Back to All Guides</a>
+
+<div class="guide-profile">
+  <img src="/static/{{ guide.name }}.png" alt="Guide" class="guide-image">
+  <div class="guide-info">
+    <h2>{{ guide.name }}</h2>
+    <p><strong>Specialty:</strong> {{ guide.specialty }}</p>
+    <p><strong>Quote:</strong><em>“{{ guide.quote }}”</em></p>
+    <p><strong>Languages:</strong> {{ guide.languages }}</p>
+  </div>
+</div>
+
+<style>
+.back-link {
+  display: inline-block;
+  margin-bottom: 1rem;
+  text-decoration: none;
+  color: #0055a5;
+  font-weight: bold;
+}
+
+.guide-profile {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+  background-color: #f9f9f9;
+  padding: 1.5rem;
+  border-radius: 6px;
+}
+
+.guide-image {
+  width: 260px;
+  height: 180px;
+  background-color: #ddd;
+  line-height: 180px;
+  text-align: center;
+  font-style: italic;
+  border-radius: 6px;
+  color: #555;
+}
+
+.guide-info {
+  flex: 1;
+  min-width: 250px;
+}
+</style>
+
+{% endblock %}

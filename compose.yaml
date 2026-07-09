@@ -11,3 +11,9 @@ services:
     ports:
       - "9001:80"
     restart: unless-stopped
+  corsica:
+    build: ./challenges/corsica/
+    network_mode: host
+    restart: unless-stopped
+    ports:
+      - "9002:443"
