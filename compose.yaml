@@ -16,7 +16,7 @@ services:
     restart: unless-stopped
     ports:
       - "9002:443"
-  qr-hell:
+  UEDA:
     build: ./challenges/UEDA/
     restart: unless-stopped
     ports:
