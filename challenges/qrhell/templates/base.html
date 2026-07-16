@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{% block title %}European Union Login Interface{% endblock %}</title>
+    <style>
+      :root {
+        --eu-blue: #0056a0;
+        --eu-blue-dark: #003e8a;
+        --eu-gold: #ffd700;
+        --eu-bg: #eaeaea;
+        --eu-text: #333;
+        --eu-muted: #666;
+        --eu-note: #999;
+        --eu-error: #b00020;
+        --eu-ok: #1b5e20;
+        --grid-on: #111;
+        --grid-off: #fdfdfd;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        min-height: 100vh;
+        font-family: "Roboto Slab", Georgia, serif;
+        background-color: var(--eu-bg);
+        color: var(--eu-text);
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+        padding: 2.5rem 1rem 3rem;
+      }
+
+      a {
+        color: var(--eu-blue);
+      }
+
+      .wrap {
+        width: 100%;
+        max-width: 520px;
+      }
+
+      .portal-container {
+        background-color: #fff;
+        border: 5px solid var(--eu-blue);
+        border-radius: 10px;
+        padding: 2.5rem 2rem 2rem;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+        text-align: center;
+        position: relative;
+      }
+
+      .eu-seal {
+        position: absolute;
+        top: -28px;
+        right: -20px;
+        left: auto;
+        background: var(--eu-gold);
+        border: 3px dashed var(--eu-blue);
+        padding: 14px 16px;
+        border-radius: 50%;
+        font-size: 11px;
+        font-weight: bold;
+        transform: rotate(12deg);
+        box-shadow: 0 0 5px #000;
+        color: var(--eu-blue-dark);
+        line-height: 1.2;
+        z-index: 1;
+      }
+
+      .eu-seal.left {
+        top: -30px;
+        left: -30px;
+        right: auto;
+        transform: rotate(-15deg);
+      }
+
+      .eu-flag {
+        font-size: 36px;
+        margin-bottom: 8px;
+      }
+
+      .portal-title {
+        font-size: 20px;
+        color: var(--eu-blue-dark);
+        margin: 0 0 5px;
+        font-weight: bold;
+      }
+
+      .portal-subtitle {
+        font-size: 13px;
+        color: var(--eu-muted);
+        margin: 0 0 6px;
+        line-height: 1.4;
+      }
+
+      .portal-subtitle:last-of-type {
+        margin-bottom: 1.25rem;
+      }
+
+      .portal-body {
+        text-align: left;
+      }
+
+      .portal-note {
+        font-size: 12px;
+        margin-top: 1.25rem;
+        color: var(--eu-note);
+        text-align: center;
+        line-height: 1.45;
+      }
+
+      label {
+        display: block;
+        margin-bottom: 0.35rem;
+        font-weight: bold;
+        font-size: 14px;
+        color: var(--eu-blue-dark);
+      }
+
+      input[type="text"],
+      input[type="password"] {
+        width: 100%;
+        padding: 10px;
+        margin: 0 0 12px;
+        font-size: 16px;
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        background-color: #fdfdfd;
+        font-family: inherit;
+      }
+
+      button,
+      .btn {
+        display: inline-block;
+        background-color: var(--eu-blue);
+        color: #fff;
+        border: none;
+        border-radius: 8px;
+        padding: 12px 20px;
+        font-size: 16px;
+        font-weight: bold;
+        cursor: pointer;
+        text-decoration: none;
+        font-family: inherit;
+      }
+
+      button:hover,
+      .btn:hover {
+        background-color: var(--eu-blue-dark);
+        color: #fff;
+      }
+
+      button.secondary {
+        background-color: #6b7c93;
+        font-size: 14px;
+        padding: 8px 14px;
+      }
+
+      button.secondary:hover {
+        background-color: #4f5d6f;
+      }
+
+      button.full-width {
+        width: 100%;
+        margin-top: 0.5rem;
+      }
+
+      .flash {
+        padding: 0.75rem 1rem;
+        border-radius: 8px;
+        margin-bottom: 1rem;
+        font-size: 14px;
+        text-align: left;
+      }
+
+      .flash.ok {
+        background: #e8f5e9;
+        border: 1px solid var(--eu-ok);
+        color: var(--eu-ok);
+      }
+
+      .flash.error {
+        background: #ffebee;
+        border: 1px solid var(--eu-error);
+        color: var(--eu-error);
+      }
+
+      .hint {
+        color: var(--eu-muted);
+        font-size: 12px;
+        line-height: 1.5;
+        margin: 0 0 1rem;
+      }
+
+      .grid-wrap {
+        display: flex;
+        justify-content: center;
+        margin: 1rem 0;
+      }
+
+      .grid-panel {
+        text-align: center;
+      }
+
+      #draw-grid {
+        display: inline-grid;
+        grid-template-columns: repeat(21, 14px);
+        gap: 1px;
+        background: #888;
+        padding: 1px;
+        border-radius: 4px;
+        border: 2px solid var(--eu-blue);
+        user-select: none;
+      }
+
+      #draw-grid .cell {
+        width: 14px;
+        height: 14px;
+        background: var(--grid-off);
+        cursor: crosshair;
+        border: none;
+        padding: 0;
+      }
+
+      #draw-grid .cell.on {
+        background: var(--grid-on);
+      }
+
+      .grid-actions {
+        margin-top: 0.75rem;
+        display: flex;
+        gap: 0.5rem;
+        justify-content: center;
+        flex-wrap: wrap;
+      }
+
+      .flag-box {
+        margin-top: 1rem;
+        padding: 1rem;
+        border-radius: 8px;
+        background: #fffde7;
+        border: 2px dashed var(--eu-gold);
+        font-family: ui-monospace, monospace;
+        font-size: 15px;
+        text-align: center;
+        color: var(--eu-blue-dark);
+      }
+
+      nav.links {
+        margin-top: 1.25rem;
+        display: flex;
+        gap: 0.75rem;
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+
+      .register-link {
+        display: block;
+        margin-top: 1rem;
+        color: #444;
+        font-size: 14px;
+        text-decoration: underline;
+        text-align: center;
+      }
+
+      .article-tag {
+        display: inline-block;
+        font-size: 11px;
+        background: var(--eu-gold);
+        color: var(--eu-blue-dark);
+        padding: 2px 8px;
+        border-radius: 4px;
+        margin-bottom: 0.75rem;
+        font-weight: bold;
+      }
+
+      .portal-list {
+        font-size: 14px;
+        color: var(--eu-muted);
+        line-height: 1.55;
+        margin: 0 0 1.25rem;
+        padding-left: 1.2rem;
+      }
+
+      .portal-list li {
+        margin-bottom: 0.35rem;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="wrap">
+      <div class="portal-container">
+        <div class="eu-flag" aria-hidden="true">🇪🇺</div>
+        <div class="eu-seal {% block seal_position %}left{% endblock %}">GDPR<br />COMPLIANT</div>
+
+        {% block portal_header %}
+        <h1 class="portal-title">{% block portal_title %}Official EU Login Gateway{% endblock %}</h1>
+        <p class="portal-subtitle">{% block portal_subtitle_1 %}Newly Updated{% endblock %}</p>
+        <p class="portal-subtitle">{% block portal_subtitle_2 %}Part of the Unified Login Authority of Europe{% endblock %}</p>
+        {% endblock %}
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+          {% if messages %}
+            {% for category, message in messages %}
+              <div class="flash {{ category }}">{{ message }}</div>
+            {% endfor %}
+          {% endif %}
+        {% endwith %}
+
+        <div class="portal-body">
+          {% block body %}{% endblock %}
+        </div>
+
+        {% block portal_note %}
+        <p class="portal-note">
+          ⚠️ Use of this portal may result in spontaneous new regulations.
+        </p>
+        {% endblock %}
+      </div>
+    </div>
+  </body>
+</html>

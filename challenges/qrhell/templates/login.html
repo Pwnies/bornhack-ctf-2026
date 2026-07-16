@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% block title %}🔐 European Union Login Interface v1.7.3-BETA{% endblock %}
+{% block seal_position %}left{% endblock %}
+{% block portal_title %}Official EU Login Gateway{% endblock %}
+{% block portal_subtitle_1 %}Newly Updated · Visual Authentication Mandate{% endblock %}
+{% block portal_subtitle_2 %}Part of the Unified Login Authority of Europe{% endblock %}
+{% block body %}
+<form id="login-form" method="post" action="{{ url_for('login') }}">
+  <label for="username">Official Username</label>
+  <input
+    id="username"
+    name="username"
+    type="text"
+    placeholder="Enter Official Username"
+    autocomplete="username"
+    required
+  />
+
+  <label>Authorized Access Phrase (21×21 Visual Encoding)</label>
+  <p class="hint">
+    To support the dyslexic community we have decided to remove text entirely from passwords.
+    Instead please provide a valid version 1 QR code representing your password instead. 
+  </p>
+
+  <div class="grid-wrap">
+    <div class="grid-panel">
+      <div id="draw-grid" aria-label="21 by 21 QR module grid"></div>
+      <div class="grid-actions">
+        <button type="button" class="secondary" id="clear-grid">Erase Matrix</button>
+        <button type="button" class="secondary" id="fill-quiet">Place Finder Patterns</button>
+      </div>
+    </div>
+  </div>
+
+  <button type="submit" class="full-width">Authenticate Citizen</button>
+</form>
+<a href="{{ url_for('register') }}" class="register-link">Not yet registered with the EU Authority?</a>
+<script src="{{ url_for('static', filename='login.js') }}"></script>
+<script>
+  window.initLoginPage && window.initLoginPage();
+</script>
+{% endblock %}
+{% block portal_note %}
+{% endblock %}

@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block title %}Citizen Services Portal — ULAE{% endblock %}
+{% block portal_title %}Citizen Services Portal{% endblock %}
+{% block portal_subtitle_1 %}Session active for {{ username }}{% endblock %}
+{% block portal_subtitle_2 %}
+  {% if is_admin %}Clearance: Administrator · Annex VII-B{% else %}Clearance: Standard Citizen{% endif %}
+{% endblock %}
+{% block body %}
+{% if flag %}
+  <span class="article-tag">RESTRICTED — Article 9 Derogation (probably)</span>
+  <p class="hint" style="text-align: center;">
+    Congratulations. You have accessed the classified annex. Please do not export this flag
+    to jurisdictions lacking an adequacy decision.
+  </p>
+  <div class="flag-box">{{ flag }}</div>
+{% else %}
+  <p class="hint" style="text-align: center;">
+    Your citizen record contains no classified annex data. Perhaps a different clearance.
+  </p>
+{% endif %}
+<nav class="links">
+  <a class="btn secondary" href="{{ url_for('logout') }}">Withdraw Consent &amp; Log Out</a>
+  <a class="btn" href="{{ url_for('index') }}">Return to Gateway</a>
+</nav>
+{% endblock %}
+{% block portal_note %}
+<p class="portal-note">
+  This session is logged for accountability, transparency, and a future enviromental assessment.
+</p>
+{% endblock %}

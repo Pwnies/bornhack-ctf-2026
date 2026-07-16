@@ -17,3 +17,10 @@ services:
     restart: unless-stopped
     ports:
       - "9002:443"
+  qr-hell:
+  corsica:
+    build: ./challenges/qrhell/
+    network_mode: host
+    restart: unless-stopped
+    ports:
+      - "5000:5000"

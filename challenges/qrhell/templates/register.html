@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block title %}EU Citizen Enrollment — GDPR Portal{% endblock %}
+{% block portal_title %}Citizen Enrollment Form{% endblock %}
+{% block portal_subtitle_2 %}Data Controller: The Commission (probably){% endblock %}
+{% block body %}
+<p class="hint">
+  By submitting this form you agree that your credentials may be stored in my mom's basement
+</p>
+<form method="post" action="{{ url_for('register') }}">
+  <label for="username">Official Username</label>
+  <input
+    id="username"
+    name="username"
+    type="text"
+    placeholder="Enter Official Username"
+    autocomplete="username"
+    required
+  />
+
+  <label for="password">Authorized Access Phrase</label>
+  <input
+    id="password"
+    name="password"
+    type="password"
+    placeholder="Authorized Access Phrase"
+    autocomplete="new-password"
+    required
+  />
+
+  <button type="submit" class="full-width">Submit Enrollment to ULAE</button>
+</form>
+<a href="{{ url_for('login') }}" class="register-link">Already registered with the EU Authority?</a>
+{% endblock %}
+{% block portal_note %}
+{% endblock %}

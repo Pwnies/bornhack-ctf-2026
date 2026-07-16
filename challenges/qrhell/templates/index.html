@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block title %}🔐 European Union Login Interface v1.7.3-BETA{% endblock %}
+{% block portal_title %}European Union Login Interface{% endblock %}
+{% block portal_subtitle_2 %}Unified Login Authority of Europe {% endblock %}
+{% block body %}
+<span class="article-tag">Regulation (EU) 2049/679 — Recital 42 (approx.)</span>
+<p class="hint" style="text-align: center;">
+  Welcome, citizen. This portal implements next-generation authentication in compliance.
+</p>
+<nav class="links">
+  <a class="btn" href="{{ url_for('register') }}">Enroll Citizen</a>
+  <a class="btn" href="{{ url_for('login') }}">Authenticate (Visual)</a>
+  {% if session.get('user_id') %}
+    <a class="btn secondary" href="{{ url_for('dashboard') }}">Citizen Dashboard</a>
+    <a class="btn secondary" href="{{ url_for('logout') }}">Withdraw Consent</a>
+  {% endif %}
+</nav>
+{% endblock %}
