@@ -12,7 +12,7 @@ services:
       - "9001:80"
     restart: unless-stopped
   corsica:
-    build: ./challenges/corsica/
+    build: ./challenges/corsica/challenge/
     network_mode: host
     restart: unless-stopped
     ports:
