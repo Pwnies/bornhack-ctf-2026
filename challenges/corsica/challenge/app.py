@@ -14,7 +14,7 @@ app.config.update(
     SESSION_COOKIE_SECURE=True
 )
 
-FLAG = "DDC{m3t4_r3fr3sh_b34ts_csp_3very_t1me}"
+FLAG = "BHCTF{m3t4_r3fr3sh_b34ts_csp_3very_t1me}"
 HOSTNAME_FOR_ADMIN_BOT = "localhost:443"
 FLAG_TOKEN_LIFETIME = 5
 ADMIN_USERNAME = "admin"

@@ -9,7 +9,7 @@ Then welcome to Corsica!
 CORS challenge, exploitable via HTML injection + meta refresh redirect (bypassing strict CSP) sent to an admin bot.
 
 ## Flag:
-`DDC{m3t4_r3fr3sh_b34ts_csp_3very_t1me}`
+`BHCTF{m3t4_r3fr3sh_b34ts_csp_3very_t1me}`
 
 ## Handout:
 * N/A (only a URL given)
