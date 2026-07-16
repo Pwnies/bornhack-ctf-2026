@@ -13,10 +13,6 @@ COPY . .
 
 RUN mkdir -p /app/data
 
-ENV DATABASE=/app/data/challenge.db
-ENV FLAG=ctf{draw_your_way_in}
-ENV SECRET_KEY=change-me-for-production
-
 EXPOSE 5000
 
 CMD ["python", "app.py"]
