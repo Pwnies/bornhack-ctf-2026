@@ -13,13 +13,11 @@ services:
     restart: unless-stopped
   corsica:
     build: ./challenges/corsica/challenge/
-    network_mode: host
     restart: unless-stopped
     ports:
       - "9002:443"
   qr-hell:
     build: ./challenges/UEDA/
-    network_mode: host
     restart: unless-stopped
     ports:
       - "5000:5000"
