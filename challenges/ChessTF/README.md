@@ -1,34 +1,25 @@
 # Chess CTF
 
-Four "chess" misc challenges behind one simple JSON API. See [`plan.md`](plan.md) for design.
+# Flags:
+* Game 1, Baby's first checkmate: BHCTF{r4nd0m_b0t_1s_n0_m4tch}
+* Game 2, Welcome to the jungle:  BHCTF{inv1sible_k1ng_1s_d3ad_GG}
+* Game 3, Behind enemy lines:     BHCTF{Exc3lent_r0yal_run}
+* Game 4, Chessmaster:            BHCTF{po0r_pr3dictable_bart_4lways_m0ves_th3_same}
 
-**Everything runs in Docker — no host Python needed.**
+# Solution(s)
+* Game 1: Play the game, the bot is random...
+* Game 2: Same dummy bot as Game 1, but bot is "invisible". Proxy the traffic and view their location via the API (note: location is scrambled as well as "invisible")
+* Game 3: 100 mazes. Create a maze solver that interacts with the API
+* Gmae 4: Note the new bot sets its random-seed based on the users movement. Find a Fool's Mate-like move, repeat it 100 times (automated), win
 
-## Run (dev, hot-reload)
-
+## Run
 ```bash
-docker compose up --build        # API on http://localhost:8000
+docker compose up --build
 docker compose down
 ```
 
-## Tests
-
+## Run Tests
 ```bash
 docker compose run --rm --no-deps backend python -m pytest backend/tests -q
 ```
 
-## API
-
-| Method | Path                | Body                      | Returns |
-|--------|---------------------|---------------------------|---------|
-| GET    | `/api/games`        | —                         | list of game ids |
-| POST   | `/api/{game}/new`   | —                         | envelope (with intro `message`) |
-| POST   | `/api/{game}/move`  | `{"session","move"}` (UCI)| envelope |
-| GET    | `/healthz`          | —                         | `{"ok":true}` |
-
-Envelope: `{ session, fen, turn, last_move, status, message, error, ... }`
-where `status` ∈ `in_progress | victory | failed`. The server always sends the true
-board; Game 2's hiding is frontend-only.
-
-> Note: `curl ... | echo` mangles JSON under **zsh** (its `echo` expands `\n`). Use
-> `printf '%s'` or pipe straight into `python3 -m json.tool`.
