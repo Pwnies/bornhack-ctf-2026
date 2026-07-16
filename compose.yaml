@@ -18,7 +18,6 @@ services:
     ports:
       - "9002:443"
   qr-hell:
-  corsica:
     build: ./challenges/UEDA/
     network_mode: host
     restart: unless-stopped
