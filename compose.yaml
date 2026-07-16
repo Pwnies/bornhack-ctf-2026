@@ -23,3 +23,27 @@ services:
     restart: unless-stopped
     ports:
       - "5000:5000"
+  chess-tf:
+    build: ./challenges/ChessTF
+    image: chess-tf:latest
+    restart: unless-stopped
+    ports:
+      - "9003:8000"
+    environment:
+      # Don't change, it might mess up challenge #4
+      - SEED_BASE=0
+      - SESSION_TTL=3600
+      - MAX_SESSIONS=5000
+    healthcheck:
+      test: ["CMD", "python", "-c",
+             "import urllib.request; urllib.request.urlopen('http://127.0.0.1:9003/healthz')"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 5s
+    deploy:
+      resources:
+        limits:
+          # Caps the blast radius of a runaway/abusive client on a shared CTF box.
+          cpus: "2.0"
+          memory: 512M

@@ -1,0 +1,36 @@
+# Run:   docker compose up -d --build
+# Tests: docker compose exec -T chess-tf python -m pytest -q
+services:
+  chess-tf:
+    build: .
+    image: chess-tf:latest
+    restart: unless-stopped
+    ports:
+      - "8000:8000"
+    environment:
+      # Don't change, it might mess up challenge #4
+      - SEED_BASE=0
+      - SESSION_TTL=3600
+      - MAX_SESSIONS=5000
+      # Flags in backend/config.py.
+    healthcheck:
+      test: ["CMD", "python", "-c",
+             "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/healthz')"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 5s
+    deploy:
+      resources:
+        limits:
+          # Caps the blast radius of a runaway/abusive client on a shared CTF box.
+          cpus: "2.0"
+          memory: 512M
+
+    # Uncomment BOTH to live-edit the source: host files are bind-mounted over the
+    # image, and --reload restarts uvicorn on any .py change. Leave commented for
+    # production and when merging into the CTF compose.
+    # volumes:
+    #   - ./backend:/app/backend
+    #   - ./frontend:/app/frontend
+    # command: uvicorn backend.app:app --host 0.0.0.0 --port 8000 --reload

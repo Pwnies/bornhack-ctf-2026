@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Chess-TF</title>
+  <link rel="stylesheet" href="/style.css" />
+</head>
+<body>
+  <header>
+    <h1><a href="#" id="home-link">Chess-TF</a></h1>
+  </header>
+
+  <!-- Menu view -->
+  <main id="menu-view">
+    <p class="tagline"></p>
+    <div id="menu" class="menu"></div>
+  </main>
+
+  <!-- Game view -->
+  <main id="game-view" hidden>
+    <div class="game-head">
+      <button id="back-btn" class="ghost">&larr; Menu</button>
+      <h2 id="game-title"></h2>
+      <button id="restart-btn" class="ghost">Restart</button>
+    </div>
+    <div id="message" class="message"></div>
+    <div class="board-wrap">
+      <div id="board" class="board"></div>
+    </div>
+    <div id="status-bar" class="status-bar"></div>
+  </main>
+
+  <script src="/app.js"></script>
+</body>
+</html>

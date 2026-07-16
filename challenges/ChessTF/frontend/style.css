@@ -1,0 +1,148 @@
+:root {
+  --bg: #14161a;
+  --panel: #1e2229;
+  --panel-2: #262b34;
+  --text: #e7e9ee;
+  --muted: #9aa3b2;
+  --accent: #6ea8fe;
+  --light: #efe6d4;
+  --dark: #7c6b53;
+  --sel: #f2d16b;
+  --move: #b7d97a;
+  --ok: #5bd68a;
+  --bad: #ff6b6b;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+}
+
+header {
+  padding: 28px 24px;
+  border-bottom: 1px solid #2a2f38;
+  text-align: center;
+}
+header h1 { margin: 0; font-size: clamp(28px, 5vw, 44px); font-weight: 800; }
+header a { color: var(--text); text-decoration: none; }
+
+main { max-width: 820px; margin: 0 auto; padding: 24px; }
+
+.tagline { color: var(--muted); margin-top: 0; }
+
+/* Menu — 2x2 grid of large challenge tiles */
+.menu {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 22px;
+}
+.card {
+  background: var(--panel);
+  border: 1px solid #2a2f38;
+  border-radius: 16px;
+  padding: 34px 20px 28px;
+  cursor: pointer;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  min-height: 240px;
+  justify-content: center;
+  transition: transform .1s ease, border-color .1s ease, background .1s ease;
+}
+.card:hover {
+  transform: translateY(-3px);
+  border-color: var(--accent);
+  background: var(--panel-2);
+}
+.card.disabled { opacity: .5; cursor: not-allowed; }
+.card.disabled:hover { transform: none; border-color: #2a2f38; background: var(--panel); }
+.card .icon {
+  font-size: 84px;
+  line-height: 1;
+  color: var(--text);
+  text-shadow: 0 2px 6px rgba(0,0,0,.5);
+}
+.card:hover .icon { color: var(--accent); }
+.card h3 { margin: 0; font-size: 24px; font-weight: 700; }
+.card .diff {
+  font-size: 12px; text-transform: uppercase; letter-spacing: .08em;
+  color: var(--accent); font-weight: 600;
+}
+.card .soon { color: var(--sel); font-size: 12px; font-weight: 600; margin: 0; }
+
+@media (max-width: 560px) {
+  .menu { grid-template-columns: 1fr; }
+  .card { min-height: 180px; }
+  .card .icon { font-size: 64px; }
+}
+
+/* Game head */
+.game-head {
+  display: flex; align-items: center; justify-content: space-between; gap: 12px;
+  margin-bottom: 12px;
+}
+.game-head h2 { margin: 0; font-size: 18px; }
+button.ghost {
+  background: var(--panel-2); color: var(--text);
+  border: 1px solid #333a45; border-radius: 8px; padding: 8px 12px; cursor: pointer;
+}
+button.ghost:hover { border-color: var(--accent); }
+
+.message {
+  background: var(--panel);
+  border: 1px solid #2a2f38;
+  border-radius: 8px;
+  padding: 12px 16px;
+  white-space: pre-wrap;
+  color: var(--text);
+  margin-bottom: 16px;
+  font-size: 15px;
+  line-height: 1.4;
+  /* Fixed footprint so the board never jumps as messages change length. */
+  height: 5.4em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  overflow: auto;
+  border-top: 3px solid var(--accent);
+}
+.message.ok { border-top-color: var(--ok); }
+.message.bad { border-top-color: var(--bad); }
+
+/* Board */
+.board-wrap { display: flex; justify-content: center; }
+.board {
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  grid-template-rows: repeat(8, 1fr);
+  width: min(90vw, 480px);
+  aspect-ratio: 1 / 1;
+  border: 4px solid #2a2f38;
+  border-radius: 6px;
+  overflow: hidden;
+  user-select: none;
+}
+.square {
+  display: flex; align-items: center; justify-content: center;
+  /* Cell size is driven purely by the grid tracks. min-*:0 + overflow stop a
+     tall glyph from expanding its row (grid items default to min-height:auto). */
+  min-width: 0; min-height: 0; overflow: hidden;
+  font-size: clamp(22px, 6.5vw, 38px);
+  line-height: 1; cursor: pointer; position: relative;
+}
+.square.light { background: var(--light); }
+.square.dark { background: var(--dark); }
+.square.sel { box-shadow: inset 0 0 0 4px var(--sel); }
+.square.last { box-shadow: inset 0 0 0 4px var(--move); }
+.square .pc.white { color: #fff; text-shadow: 0 1px 1px rgba(0,0,0,.55); }
+.square .pc.black { color: #111; text-shadow: 0 1px 1px rgba(255,255,255,.25); }
+
+.status-bar { text-align: center; color: var(--muted); margin-top: 14px; font-size: 14px; }
+.status-bar.locked { color: var(--sel); }
