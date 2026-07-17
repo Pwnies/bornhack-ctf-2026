@@ -7,7 +7,7 @@ The gang has just encountered a new cyber-improved safe, which even Egon cannot 
 Can you help them get the flag before the police gets here?
 
 ## Flag:
-BHCTF{skiid3_g0dt_eg0n}
+BHCTF{j3g_h4r_3n_pl4n!}
 
 ## Compile it via `doit.sh`
 `gcc -O0 challenge.c -o franz_jaeger_4000`

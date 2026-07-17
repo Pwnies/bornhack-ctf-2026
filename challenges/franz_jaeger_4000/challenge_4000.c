@@ -45,11 +45,11 @@ int pin3_1(int x) {
 }
 
 int pin3_2(int x) {
-    return (x*0x03);
+    return (x*0x04);
 }
 
 int pin3_3(int x) {
-    return (x*0x0a*0x05);
+    return (x*0x0d*0x02);
 }
 
 
@@ -85,8 +85,8 @@ void alarm_4() {
 
 int main() {
 
-    // skiid3_g0dt_eg0n
-    // n0ge _td0 g_3d iiks
+    // j3g_h4r_3n_pl4n!
+    // !n4l p_n3 _r4h _g3j
 
     // Variables
     char total_input [16] = "";
@@ -101,7 +101,7 @@ int main() {
 
 
     // *** Pin 1 ***
-    // n0ge
+    // !n4l
     printf("Input pin #1: ");
     scanf("%s", user_input);
     user_input_len = strlen(user_input);
@@ -111,16 +111,16 @@ int main() {
         alarm_1();
     }
 
-    if (user_input[0] != 'n'){
+    if (user_input[0] != '!'){
         alarm_1();
     }
-    if (user_input[1] != '0'){
+    if (user_input[1] != 'n'){
         alarm_1();
     }
-    if (user_input[2] != 'g'){
+    if (user_input[2] != '4'){
         alarm_1();
     }
-    if (user_input[3] != 'e'){
+    if (user_input[3] != 'l'){
         alarm_1();
     }
 
@@ -129,7 +129,7 @@ int main() {
 
 
     // *** Pin 2 ***
-    // _td0
+    // p_n3
     printf("Input pin #2: ");
     scanf("%s", user_input);
     user_input_len = strlen(user_input);
@@ -139,16 +139,16 @@ int main() {
         alarm_2();
     }
 
-    if ((333/9)-37 != (user_input[3] - '0')){
+    if ((333/9)-34 != (user_input[3] - '0')){
         alarm_2();
     }
-    if ((user_input[2] ^ 0x64) != 0){
+    if ((user_input[2] ^ 0x6e) != 0){
         alarm_2();
     }
-    if ((user_input[1] ^ 0x74) != 0){
+    if ((user_input[1] ^ 0x5f) != 0){
         alarm_2();
     }
-    if ((user_input[0] ^ 0x5f) != 0){
+    if ((user_input[0] ^ 0x70) != 0){
         alarm_2();
     }
 
@@ -157,7 +157,7 @@ int main() {
 
 
     // *** Pin 3 ***
-    // g_3d
+    // _r4h
     printf("Input pin #3: ");
     scanf("%s", user_input);
     user_input_len = strlen(user_input);
@@ -167,16 +167,16 @@ int main() {
         alarm_3();
     }
 
-    if ((user_input[0] ^ pin3_0(0x50)) != 0){
+    if ((user_input[0] ^ pin3_0(0x48)) != 0){
         alarm_3();
     }
-    if ((user_input[1] ^ pin3_1(0x6d)) != 0) {
+    if ((user_input[1] ^ pin3_1(0x80)) != 0) {
         alarm_3();
     }
-    if ((user_input[2] ^ pin3_2(0x11)) != 0) {
+    if ((user_input[2] ^ pin3_2(0x0d)) != 0) {
         alarm_3();
     }
-    if ((user_input[3] ^ pin3_3(0x02)) != 0) {
+    if ((user_input[3] ^ pin3_3(0x04)) != 0) {
         alarm_3();
     }
 
@@ -186,7 +186,7 @@ int main() {
 
 
     // *** Pin 4 ***
-    // iiks
+    // _g3j
     printf("Input pin #4: ");
     scanf("%s", user_input);
     user_input_len = strlen(user_input);
@@ -196,29 +196,27 @@ int main() {
         alarm_4();
     }
 
-    printf("%c", total_input[0]);
-
     // Check 1: Weighted sum constraint
-    // 105*7 + 105*3 + 107*2 + 115*1 = 735 + 315 + 214 + 115 = 1379
-    if ((user_input[0] * 7) + (user_input[1] * 3) + (user_input[2] * 2) + (user_input[3] * 1) != 1379){
+    // 95*7 + 103*3 + 51*2 + 106*1 = 665 + 309 + 102 + 106 = 1182
+    if ((user_input[0] * 7) + (user_input[1] * 3) + (user_input[2] * 2) + (user_input[3] * 1) != 1182){
         alarm_4();
     }
 
     // Check 2: Different weighted sum
-    // 105*2 + 105*5 + 107*4 + 115*3 = 210 + 525 + 428 + 345 = 1508
-    if ((user_input[0] * 2) + (user_input[1] * 5) + (user_input[2] * 4) + (user_input[3] * 3) != 1508){
+    // 95*2 + 103*5 + 51*4 + 106*3 = 190 + 515 + 204 + 318 = 1227
+    if ((user_input[0] * 2) + (user_input[1] * 5) + (user_input[2] * 4) + (user_input[3] * 3) != 1227){
         alarm_4();
     }
 
     // Check 3: Another weighted combination
-    // 105*11 + 105*13 + 107*17 + 115*19 = 1155 + 1365 + 1819 + 2185 = 6524
-    if ((user_input[0] * 11) + (user_input[1] * 13) + (user_input[2] * 17) + (user_input[3] * 19) != 6524){
+    // 95*11 + 103*13 + 51*17 + 106*19 = 1045 + 1339 + 867 + 2014 = 5265
+    if ((user_input[0] * 11) + (user_input[1] * 13) + (user_input[2] * 17) + (user_input[3] * 19) != 5265){
         alarm_4();
     }
 
     // Check 4: Subtraction-based constraint
-    // 105*23 - 105*29 + 107*31 - 115*37 = 2415 - 3045 + 3317 - 4255 = -1568
-    if ((user_input[0] * 23) - (user_input[1] * 29) + (user_input[2] * 31) - (user_input[3] * 37) != -1568){
+    // 95*23 - 103*29 + 51*31 - 106*37 = 2185 - 2987 + 1581 - 3922 = -3143
+    if ((user_input[0] * 23) - (user_input[1] * 29) + (user_input[2] * 31) - (user_input[3] * 37) != -3143){
         alarm_4();
     }
 

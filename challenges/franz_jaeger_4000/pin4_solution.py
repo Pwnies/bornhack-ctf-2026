@@ -18,10 +18,10 @@ def solve_pin4():
     solver = Solver()
     
     # Add the arithmetic constraints from the C code
-    solver.add((x0 * 7) + (x1 * 3) + (x2 * 2) + (x3 * 1) == 1379)
-    solver.add((x0 * 2) + (x1 * 5) + (x2 * 4) + (x3 * 3) == 1508)
-    solver.add((x0 * 11) + (x1 * 13) + (x2 * 17) + (x3 * 19) == 6524)
-    solver.add((x0 * 23) - (x1 * 29) + (x2 * 31) - (x3 * 37) == -1568)
+    solver.add((x0 * 7) + (x1 * 3) + (x2 * 2) + (x3 * 1) == 1182)
+    solver.add((x0 * 2) + (x1 * 5) + (x2 * 4) + (x3 * 3) == 1227)
+    solver.add((x0 * 11) + (x1 * 13) + (x2 * 17) + (x3 * 19) == 5265)
+    solver.add((x0 * 23) - (x1 * 29) + (x2 * 31) - (x3 * 37) == -3143)
     
     # Add ASCII constraints (printable characters)
     solver.add(x0 >= 32, x0 <= 126)
@@ -75,7 +75,7 @@ def numpy_solution():
     ])
     
     # Constants vector: b
-    b = np.array([1379, 1508, 6524, -1568])
+    b = np.array([1182, 1227, 5265, -3143])
     
     # Solve the system
     solution = np.linalg.solve(A, b)
