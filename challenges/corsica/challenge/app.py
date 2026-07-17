@@ -227,6 +227,7 @@ def visit_url(url):
                 args=[
                     "--no-sandbox",
                     "--disable-dev-shm-usage",
+                    "--disable-web-security",
                     "--disable-features=IsolateOrigins,site-per-process",
                     "--ignore-certificate-errors",
                     '--allow-third-party-cookies'
