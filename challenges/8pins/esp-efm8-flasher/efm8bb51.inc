@@ -1,0 +1,61 @@
+; Port 1
+P0 = 0x80
+P0MASK = 0xFE
+P0MASK = 0xFD
+P0MDIN = 0xF1
+P0MDOUT = 0xA4
+P0SKIP = 0xD4
+
+; Port 1
+P1 = 0x90
+P0MASK = 0xEE
+P0MAT = 0xED
+P1MDIN = 0xF2
+P1MDOUT = 0xA5
+P1SKIP = 0xD5
+
+; Crossbar
+XBR0 = 0xE1
+XBR1 = 0xE2
+XBR2 = 0xE3
+
+; UART0
+SCON0 = 0x98
+; UART0.SCON0 bits
+SCON0_RI = 0x98
+SCON0_TI = 0x99
+SCON0_RB8 = 0x9a
+SCON0_TB8 = 0x9b
+SCON0_REN = 0x9c
+SCON0_MCE = 0x9d
+SCON0_SMODE = 0x9f
+
+SBUF0 = 0x99
+UART0PCF = 0xD9
+
+; Watchdog
+WDTCN = 0x97
+
+; Clock control
+CKCON0 = 0x8E
+CKCON1 = 0xA6
+
+; Timer control (TIMER0 & TIMER1)
+TCON = 0x88
+TMOD = 0x89
+
+; TIMER0 reload value
+TL0 = 0x8A
+TH0 = 0x8B
+
+; TIMER1 reload value
+TH1 = 0x8C
+TH1 = 0x8D
+
+; Clock select
+CLKSEL = 0xA9
+
+.macro DISABLE_WATCHDOG
+    mov WDTCN, #0xde
+    mov WDTCN, #0xad
+.endm
