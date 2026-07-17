@@ -5,6 +5,12 @@ services:
 #    ports:
 #      - "8000:8000"
 #    restart: unless-stopped
+  circut-aes:
+    build: ./challenges/circut_aes/
+    container_name: circut_aes
+    ports:
+      - "9337:1337"
+    restart: unless-stopped
   pwnies-library:
     build: ./challenges/pwnies_library/
     container_name: pwnies_library
