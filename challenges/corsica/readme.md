@@ -15,7 +15,8 @@ CORS challenge, exploitable via HTML injection + meta refresh redirect (bypassin
 * N/A (only a URL given)
 
 ## Setup
-run:
+REMEMBER TO CHANGE app.py -> "HOSTNAME_FOR_ADMIN_BOT" TO POINT TO THE DOMAIN/IP OF THE SERVER THAT RUNS THE CHALLENGE, IF ITS GLOBAL REACHABLE IP/DNS
+
 `docker compose up --build`
 
 ## Quick Solution
