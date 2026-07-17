@@ -51,3 +51,15 @@ services:
           # Caps the blast radius of a runaway/abusive client on a shared CTF box.
           cpus: "2.0"
           memory: 512M
+  simple_math:
+    build: ./challenges/simple_math/
+    container_name: simple_math
+    ports:
+      - "9004:1337"
+    restart: unless-stopped
+    deploy:
+      resources:
+        limits:
+          # Caps the blast radius of a runaway/abusive client on a shared CTF box.
+          cpus: "1.0"
+          memory: 256M
