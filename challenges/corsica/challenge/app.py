@@ -5,7 +5,7 @@ import os
 from markupsafe import Markup
 from flask import Flask, request, session, redirect, url_for, render_template, flash
 from playwright.sync_api import sync_playwright, TimeoutError as PWTimeoutError
-from threading import Thread
+from threading import Thread, Semaphore
 
 app = Flask(__name__)
 app.secret_key = 'super_secret_key_383d142f64454d4a103a'
@@ -15,7 +15,7 @@ app.config.update(
 )
 
 FLAG = "BHCTF{m3t4_r3fr3sh_b34ts_csp_3very_t1me}"
-HOSTNAME_FOR_ADMIN_BOT = "localhost:443"
+HOSTNAME_FOR_ADMIN_BOT = "challenges.pwnies.dk:9002"
 FLAG_TOKEN_LIFETIME = 5
 ADMIN_USERNAME = "admin"
 ADMIN_PASSWORD = "8b8342f930528762934dce5a279d4c8db7c5b625d21b4b688a315633a739"
@@ -26,6 +26,14 @@ user_ids = {ADMIN_USERNAME: "49643fb37a5a452da984592be8515bc1"}
 issued_tokens = []
 admin_request_cooldowns = {}  # username -> last request timestamp
 ADMIN_REQUEST_COOLDOWN = 30   # seconds between admin bot requests per user
+
+# Cap concurrent admin-bot browser sessions. Each visit_url() launches a full
+# headless Chromium (~250-400MB RSS + CPU spike); on a single-worker container
+# too many at once exhausts memory/CPU and gets the worker OOM-killed, which
+# shows up as intermittent "failed to connect" errors. This bounds how many run
+# simultaneously; excess requests queue on their own thread until a slot frees.
+MAX_CONCURRENT_BOTS = 2
+bot_slots = Semaphore(MAX_CONCURRENT_BOTS)
 
 
 @app.route('/')
@@ -180,7 +188,8 @@ def request_admin():
 
     def notify_bot():
         full_url = f"https://{HOSTNAME_FOR_ADMIN_BOT}{target_url}"
-        visit_url(full_url)
+        with bot_slots:
+            visit_url(full_url)
 
     Thread(target=notify_bot).start()
 
@@ -227,7 +236,6 @@ def visit_url(url):
                 args=[
                     "--no-sandbox",
                     "--disable-dev-shm-usage",
-                    "--disable-web-security",
                     "--disable-features=IsolateOrigins,site-per-process",
                     "--ignore-certificate-errors",
                     '--allow-third-party-cookies'
