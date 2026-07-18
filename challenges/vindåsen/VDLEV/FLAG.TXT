@@ -1,1 +1,1 @@
-CTF{placeholder_flag_2}
+BHCTF{Developers! Developers! Developers!}
