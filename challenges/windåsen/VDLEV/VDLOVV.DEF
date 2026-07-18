@@ -1,0 +1,16 @@
+NAME         VDLOVV
+
+DESCRIPTION  'VinDaasen Leverance Overvaager - fulfilment monitor'
+
+EXETYPE      WINDOWS
+
+REALMODE
+
+CODE  PRELOAD MOVEABLE DISCARDABLE
+DATA  PRELOAD FIXED MULTIPLE
+
+HEAPSIZE     1024
+STACKSIZE    5120
+
+EXPORTS
+    MainWndProc   @1

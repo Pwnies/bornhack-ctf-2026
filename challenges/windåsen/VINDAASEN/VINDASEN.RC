@@ -1,0 +1,59 @@
+#include "windows.h"
+#include "vindasen.h"
+
+VindMenu MENU
+BEGIN
+    POPUP "Filer"
+    BEGIN
+        MENUITEM "Afslut", IDM_EXIT
+    END
+    POPUP "Bestillinger"
+    BEGIN
+        MENUITEM "Åbn valgte", IDM_OPEN
+        MENUITEM "Opdater", IDM_REFRESH
+    END
+    POPUP "Hjælp"
+    BEGIN
+        MENUITEM "Om Vindåsen...", IDM_ABOUT
+    END
+END
+
+AboutBox DIALOG 22, 17, 160, 84
+STYLE WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Om Vindåsen"
+BEGIN
+    CTEXT "Vindåsen"                  -1,  0,  8, 160, 8
+    CTEXT "Ordrestyring for dåsevin"  -1,  0, 22, 160, 8
+    CTEXT "Version 0.1"               -1,  0, 44, 160, 8
+    DEFPUSHBUTTON "OK"              IDOK, 64, 64,  32, 14, WS_GROUP
+END
+
+OrderBox DIALOG 20, 20, 210, 192
+STYLE WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Bestilling"
+BEGIN
+    LTEXT "Ordrenr:"  -1,          8,   8,  50, 10
+    LTEXT ""          IDC_ID,      62,   8, 140, 10
+    LTEXT "Status:"   -1,          8,  20,  50, 10
+    LTEXT ""          IDC_STATUS,  62,  20, 140, 10
+    LTEXT "Oprettet:" -1,          8,  32,  50, 10
+    LTEXT ""          IDC_CREATED, 62,  32, 140, 10
+    LTEXT "Navn:"     -1,          8,  44,  50, 10
+    LTEXT ""          IDC_NAVN,    62,  44, 140, 10
+    LTEXT "Adresse:"  -1,          8,  56,  50, 10
+    LTEXT ""          IDC_ADRESSE, 62,  56, 140, 10
+    LTEXT ""          IDC_POSTBY,  62,  68, 140, 10
+    LTEXT "Varer:"    -1,          8,  82,  50, 10
+    CONTROL "" IDC_ITEMS, "listbox", WS_CHILD | WS_VISIBLE | WS_VSCROLL | WS_BORDER, 8, 94, 194, 54
+    LTEXT "I alt:"    -1,          8, 152,  50, 10
+    LTEXT ""          IDC_TOTAL,   62, 152, 140, 10
+    DEFPUSHBUTTON "Accepter" IDD_ACCEPT,   8, 172, 56, 14, WS_GROUP
+    PUSHBUTTON    "Afvis"    IDD_REJECT,  74, 172, 56, 14
+    PUSHBUTTON    "Luk"      IDCANCEL,   146, 172, 56, 14
+END
+
+VindAcc ACCELERATORS
+BEGIN
+    VK_RETURN, IDM_OPEN,    VIRTKEY
+    VK_F5,     IDM_REFRESH, VIRTKEY
+END

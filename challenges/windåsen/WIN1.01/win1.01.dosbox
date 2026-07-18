@@ -1,0 +1,23 @@
+# Relocatable config: launch via  ./run.sh WIN1.01/win1.01.dosbox  -- run.sh replaces @ROOT@ with the repo path.
+[dosbox]
+machine=ega
+
+[sdl]
+autolock=true
+
+[serial]
+serial1=serialmouse
+serial2=nullmodem port:2323 transparent:1
+serial3=nullmodem port:2324 transparent:1
+
+[autoexec]
+keyb dk
+REM mount c "\\dy\poidisk\dos\win3.0"
+mount c "@ROOT@/WIN1.01"
+mount d "@ROOT@/VINDAASEN"
+REM mount b "/home/poizan/Downloads/"
+c:
+PATH C:\WINDOWS;Z:\;C:\;
+REM set TEMP=C:\WIN30\TEMP
+ver set 3 30
+

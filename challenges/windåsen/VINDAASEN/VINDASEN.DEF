@@ -1,0 +1,30 @@
+; NAME carries the ring as the CP865 byte 0x8F (OEM: matches the module
+; table + the VINDèSEN.EXE filename); DESCRIPTION carries it as the
+; CP1252 byte 0xE5, since that string is ANSI display text.  Both are
+; intentional -- do not "normalise" them to one encoding.
+NAME         VINDèSEN
+
+DESCRIPTION  'VindÂsen - order management for canned wine'
+
+EXETYPE      WINDOWS       ; required for all Windows applications
+
+REALMODE                   ; Windows 1.x runs in real mode
+
+CODE  PRELOAD MOVEABLE DISCARDABLE
+; An application's automatic-data segment must be MULTIPLE (MULTIPLEDATA) so
+; Windows builds a per-instance DGROUP at launch; SINGLE marks a shared
+; library data segment and is wrong for a program.  FIXED is kept (preferred
+; for the near-pointer-heavy C code).  NB: the earlier "not enough memory"
+; load failure was NOT the data-segment attribute -- it was the NE
+; errors-in-image bit (NEIERR) set by unresolved C-runtime file externals;
+; see docs/win101-loader.md.  Using the KERNEL file API removed that.
+DATA  PRELOAD FIXED MULTIPLE
+
+HEAPSIZE     1024
+STACKSIZE    8192          ; headroom for the order-detail dialog + file rewrite
+
+; All functions called back by Windows must be exported.
+EXPORTS
+    MainWndProc   @1        ; main window procedure
+    About         @2        ; "About" dialog procedure
+    OrderDlgProc  @3        ; order-detail (accept/reject) dialog procedure

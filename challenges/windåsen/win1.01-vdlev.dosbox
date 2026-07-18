@@ -1,0 +1,28 @@
+# Relocatable config: launch via  ./run.sh win1.01-vdlev.dosbox  -- run.sh replaces @ROOT@ with the repo path.
+[dosbox]
+machine=ega
+
+[sdl]
+autolock=true
+
+[serial]
+serial1=serialmouse
+# COM2 = the fulfilment link. Connects (client) to the main instance's COM3
+# listener on TCP 2324 (win1.01.dosbox has serial3=nullmodem port:2324). 1200-8N1.
+serial2=nullmodem server:localhost port:2324 transparent:1
+
+[autoexec]
+keyb dk
+# Shared Windows 1.01 system, plus a C: overlay whose WIN.INI auto-runs the two
+# fulfilment apps (run=VDLOVV, load=VDLEV) -- keeps WIN1.01 pristine.
+mount c "@ROOT@/WIN1.01"
+mount c "@ROOT@/VDLEV/WINOVL" -t overlay
+mount d "@ROOT@/VDLEV"
+# Note: no D: overlay — dosbox-x overlays don't support the delete+rename that
+# DoSwap (VDLOVV's update swap) needs.  After a demo run, restore with:
+#   git checkout VDLEV/VDLEV.EXE VDLEV/VDLOVV.EXE
+c:
+PATH C:\WINDOWS;Z:\;C:\;
+ver set 3 30
+cd \WINDOWS
+win

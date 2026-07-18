@@ -1,0 +1,27 @@
+# Relocatable config: launch via  ./run.sh win1.01-vindaasen.dosbox  -- run.sh replaces @ROOT@ with the repo path.
+[dosbox]
+machine=ega
+
+[sdl]
+autolock=true
+
+[serial]
+serial1=serialmouse
+# COM2 = the BBS ordering line (nullmodem listener on TCP 2323).
+serial2=nullmodem port:2323 transparent:1
+# COM3 = the fulfilment link (nullmodem listener on TCP 2324); the 2nd
+# instance (win1.01-vdlev.dosbox) connects here as a client. 1200-8N1.
+serial3=nullmodem port:2324 transparent:1
+
+[autoexec]
+keyb dk
+# Shared Windows 1.01 system, plus a C: overlay whose WIN.INI auto-runs the
+# main app (the overlay WIN.INI's run= launches the ring-named app EXE) -- keeps WIN1.01 pristine.
+mount c "@ROOT@/WIN1.01"
+mount c "@ROOT@/VINDAASEN/WINOVL" -t overlay
+mount d "@ROOT@/VINDAASEN"
+c:
+PATH C:\WINDOWS;Z:\;C:\;
+ver set 3 30
+cd \WINDOWS
+win

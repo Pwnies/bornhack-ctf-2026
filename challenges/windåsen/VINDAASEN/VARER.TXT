@@ -1,0 +1,12 @@
+101  Ros‚ Provence 25 cl               18
+102  Chardonnay Klassisk 25 cl         16
+103  R›dvin Merlot 25 cl               15
+104  Mousserende Brut 20 cl            22
+105  Sauvignon Blanc 25 cl             17
+106  R›dvin Shiraz 33 cl               19
+107  Hvidvin Pinot Grigio 25 cl        16
+108  Ros‚ Frizzante 20 cl              19
+109  R›dvin Cabernet Sauvignon 25 cl   18
+110  Gl›gg p† d†se 25 cl               14
+111  Hvidvin Riesling 25 cl            16
+112  Ros‚ Sommer Spritz 20 cl          20
