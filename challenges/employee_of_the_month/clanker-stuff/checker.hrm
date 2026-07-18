@@ -1,0 +1,131 @@
+-- HUMAN RESOURCE MACHINE PROGRAM --
+-- fully self-contained flag checker: needs NO floor at all ({} works)
+-- one ASCII code of the flag per line in the INBOX -> prints 1 if correct
+
+-- ---- bootstrap 0 from the first INBOX box (no tile needed) ----
+    inbox
+    copyto 35
+    sub 35
+
+-- ---- build the power-of-two coin ladder by doubling (first 1 from bumpup) ----
+    copyto 37
+    bumpup 37
+    add 37
+    copyto 38
+    add 38
+    copyto 39
+    add 39
+    copyto 40
+    add 40
+    copyto 41
+    add 41
+    copyto 42
+    add 42
+    copyto 43
+    add 43
+    copyto 44
+
+-- ---- build the run constants straight off the hand (still holds 128) ----
+    sub 42
+    add 39
+    copyto 36
+    sub 43
+    sub 38
+    copyto 0
+
+-- ---- write the expected table into tiles 1..34 (reversed) ----
+    copyfrom 37
+    add 44
+    add 41
+    add 37
+    copyto 15
+    sub 40
+    copyto 33
+    add 37
+    copyto 32
+    add 40
+    copyto 27
+    copyto 13
+    add 39
+    copyto 31
+    add 39
+    copyto 16
+    sub 37
+    copyto 30
+    add 40
+    copyto 21
+    copyto 7
+    add 39
+    copyto 34
+    sub 40
+    copyto 12
+    add 43
+    copyto 28
+    sub 38
+    copyto 17
+    sub 39
+    copyto 24
+    copyto 22
+    add 40
+    copyto 2
+    sub 43
+    copyto 26
+    sub 37
+    copyto 3
+    sub 38
+    copyto 20
+    sub 40
+    copyto 4
+    add 43
+    sub 41
+    copyto 23
+    sub 39
+    copyto 29
+    copyto 5
+    add 37
+    copyto 14
+    add 40
+    add 38
+    copyto 19
+    sub 42
+    copyto 9
+    add 43
+    sub 40
+    copyto 11
+    sub 41
+    sub 37
+    copyto 18
+    sub 38
+    copyto 6
+    add 42
+    copyto 1
+    sub 40
+    copyto 25
+    sub 43
+    copyto 10
+    copyto 8
+
+-- ---- check loop (char 0 is already waiting in CUR; PTR counts down to 0) ----
+    jump k
+a:
+    inbox
+    copyto 35
+k:
+    copyfrom 35
+    add 36
+    sub [0]
+    jumpz b
+    copyfrom 35
+    sub 35
+    outbox
+    jump z
+b:
+    copyfrom 35
+    copyto 36
+    bumpdn 0
+    jumpz e
+    jump a
+e:
+    copyfrom 37
+    outbox
+z:
