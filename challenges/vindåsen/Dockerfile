@@ -6,7 +6,7 @@ RUN (test -f /etc/apt/sources.list.d/ubuntu.sources \
      && sed -i '/^Components:/ s/$/ universe/' /etc/apt/sources.list.d/ubuntu.sources \
      || sed -i 's/ main$/ main universe/g' /etc/apt/sources.list) \
  && apt-get update \
- && apt-get install -y --no-install-recommends tini dosbox-x \
+ && apt-get install -y --no-install-recommends tini dosbox-x socat \
  && rm -rf /var/lib/apt/lists/*
 
 # Windows 1.01 system files (shared by both VMs)
@@ -27,10 +27,13 @@ COPY VDLEV/VDLOVV.EXE \
 COPY VDLEV/WINOVL/ /challenge/VDLEV/WINOVL/
 
 COPY launch.sh /challenge/launch.sh
-RUN chmod +x /challenge/launch.sh
+COPY control.sh /challenge/control.sh
+RUN chmod +x /challenge/launch.sh /challenge/control.sh
 
 # BBS ordering line (COM2 on the VINDAASEN machine)
 EXPOSE 2323
+# Control channel
+EXPOSE 1986
 
 ENTRYPOINT ["/usr/bin/tini", "--"]
 CMD ["/challenge/launch.sh"]
