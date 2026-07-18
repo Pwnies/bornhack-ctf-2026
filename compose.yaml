@@ -74,6 +74,6 @@ services:
       resources:
         limits:
           # Caps the blast radius of a runaway/abusive client on a shared CTF box.
-          cpus: "2.0"
-          memory: 512M
+          cpus: "1.0"
+          memory: 128M
 
