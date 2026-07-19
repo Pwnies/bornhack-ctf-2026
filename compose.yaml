@@ -78,7 +78,7 @@ services:
           memory: 512M
   vindaasen2:
     build: ./challenges/vindåsen/
-    container_name: vindaasen
+    container_name: vindaasen2
     ports:
       - "2985:2323"
       - "2986:1986"
