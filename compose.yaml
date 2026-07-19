@@ -76,4 +76,16 @@ services:
           # Caps the blast radius of a runaway/abusive client on a shared CTF box.
           cpus: "1.0"
           memory: 512M
-
+  vindaasen2:
+    build: ./challenges/vindåsen/
+    container_name: vindaasen
+    ports:
+      - "2985:2323"
+      - "2986:1986"
+    restart: always
+    deploy:
+      resources:
+        limits:
+          # Caps the blast radius of a runaway/abusive client on a shared CTF box.
+          cpus: "1.0"
+          memory: 512M
