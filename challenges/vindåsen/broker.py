@@ -43,6 +43,8 @@ def handle(client):
         except OSError:                          # DOSBox-X not listening
             client.sendall(b"NO CARRIER\r\n")
             return
+        dos.settimeout(None)                     # connect timeout only; block on I/O
+        client.settimeout(None)                  # (belt & braces) never time out mid-session
         with dos:
             t = threading.Thread(target=pump, args=(client, dos), daemon=True)
             t.start()
